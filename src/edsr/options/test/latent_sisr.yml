@@ -1,0 +1,64 @@
+#### general settings
+name: latent_sisr
+use_tb_logger: true
+model: latent_denoising
+distortion: sr
+gpu_ids: [1]
+
+sde:
+  max_sigma: 50
+  T: 100
+  schedule: cosine # linear, cosine
+  eps: 0.005
+
+degradation: # for some synthetic dataset that only have GTs
+  # for denoising
+  sigma: 25
+  noise_type: G # Gaussian noise: G
+
+  # for super-resolution
+  scale: 4
+  
+#### datasets
+datasets:
+  test1:
+    name: Val_Dataset
+    mode: LQGT
+    dataroot_GT: ../dataset/DIV2K/DIV2K_valid_HR
+    dataroot_LQ: ../dataset/DIV2K/DIV2K_valid_LR_bicubic/X4
+    GT_size: 512
+    LR_size: 128
+
+
+#### network structures
+network_G:
+  type: ConditionalNAFNet
+  setting:
+    img_channel: 8
+    width: 64
+    enc_blk_nums: [1, 1, 1, 28]
+    middle_blk_num: 1
+    dec_blk_nums: [1, 1, 1, 1]
+
+# network_G:
+#   type: ConditionalUNet
+#   setting:
+#     in_nc: 8
+#     out_nc: 8
+#     nf: 64
+#     depth: 4
+
+network_L:
+  type: UNet
+  setting:
+    in_ch: 3
+    out_ch: 3
+    ch: 8
+    ch_mult: [4, 8, 8, 16]
+    embed_dim: 8
+
+#### path
+path:
+  pretrain_model_G: exp/latent_sr/latent_sisr_250224-105541/models/best.pth
+  pretrain_model_L: exp/unet_latent/latent_sr_250129-140132/models/latest_G.pth
+  root: ./

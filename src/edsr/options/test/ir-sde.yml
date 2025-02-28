@@ -1,0 +1,42 @@
+name: ir-sde
+suffix: ~  # add suffix to saved images
+model: denoising
+distortion: sr
+gpu_ids: [0]
+
+sde:
+  max_sigma: 30
+  T: 100
+  schedule: cosine # linear, cosine
+  eps: 0.005
+  
+degradation:
+  # for denoising
+  sigma: 25
+  noise_type: G # Gaussian noise: G
+
+  # for super-resolution
+  scale: 4
+
+datasets:
+  test1:
+    name: Val_Dataset
+    mode: LQGT
+    dataroot_GT: ../dataset/div2k/DIV2K_valid_HR
+    dataroot_LQ: ../dataset/div2k/DIV2K_valid_LR_bicubic/X4
+    GT_size: 512
+    LR_size: 128
+
+#### network structures
+network_G:
+  type: ConditionalUNet
+  setting:
+    in_nc: 3
+    out_nc: 3
+    nf: 64
+    depth: 4
+
+#### path
+path:
+  pretrain_model_G: ./src/ckpts/ir-sde-srx4.pth
+  root: ./
