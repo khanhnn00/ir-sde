@@ -12,7 +12,7 @@ except ImportError as e:
 Loader, Dumper = OrderedYaml()
 
 
-def parse(opt_path, ts, is_train=True):
+def parse(opt_path, is_train=True):
     with open(opt_path, mode="r") as f:
         opt = yaml.load(f, Loader=Loader)
     # export CUDA_VISIBLE_DEVICES
@@ -62,7 +62,7 @@ def parse(opt_path, ts, is_train=True):
     config_dir = path.split("/")[-2]
     if is_train:
         experiments_root = osp.join(
-            opt["path"]["root_exp"], "exp", config_dir, "{}_{}".format(opt["name"], ts)
+            opt["path"]["root_exp"], "exp", config_dir, "{}".format(opt["name"])
         )
         opt["path"]["experiments_root"] = experiments_root
         opt["path"]["models"] = osp.join(experiments_root, "models")

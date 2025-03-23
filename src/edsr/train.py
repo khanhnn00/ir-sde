@@ -41,7 +41,6 @@ def init_dist(backend="nccl", **kwargs):
 
 def main():
     #### setup options of three networks
-    ts = datetime.now().strftime("%y%m%d-%H%M%S")
     parser = argparse.ArgumentParser()
     parser.add_argument("-opt", type=str, help="Path to option YMAL file.", default="edsr.yml")
     parser.add_argument(
@@ -51,7 +50,7 @@ def main():
     args = parser.parse_args()
     
     args.opt = os.path.join('src/edsr/options/train/', args.opt)
-    opt = option.parse(args.opt, ts, is_train=True)
+    opt = option.parse(args.opt, is_train=True)
 
     # convert to NoneDict, which returns None for missing keys
     opt = option.dict_to_nonedict(opt)
@@ -94,6 +93,11 @@ def main():
     else:
         resume_state = None
 
+    if resume_state is None:
+        is_resume = False
+    else:
+        is_resume = True
+    
     #### mkdir and loggers
     if rank <= 0:  # normal training (rank -1) OR distributed training (rank 0-7)
         if resume_state is None:
@@ -116,19 +120,19 @@ def main():
             "base",
             opt["path"]["log"],
             "train_" + opt["name"],
-            ts,
             level=logging.INFO,
             screen=opt["logger"]["screen"],
             tofile=opt["logger"]["tofile"],
+            is_resume=is_resume
         )
         util.setup_logger(
             "val",
             opt["path"]["log"],
             "val_" + opt["name"],
-            ts,
             level=logging.INFO,
             screen=False,
             tofile=opt["logger"]["tofile"],
+            is_resume=is_resume
         )
         logger = logging.getLogger("base")
         logger.info(option.dict2str(opt))
@@ -238,7 +242,7 @@ def main():
                 break
 
             LQ, GT = train_data["LQ"], train_data["GT"]
-            LQ = util.upscale(LQ, scale)
+            # LQ = util.upscale(LQ, scale)
 
             model.feed_data(LQ, GT)
             model.optimize_parameters()
@@ -267,12 +271,6 @@ def main():
                 for _, val_data in enumerate(val_loader):
 
                     LQ, GT = val_data["LQ"], val_data["GT"]
-                    try:
-                        LQ = util.upscale(LQ, scale)
-                    except Exception as e:
-                        logger.info(LQ.shape)
-                        raise e
-
 
                     # valid Predictor
                     model.feed_data(LQ, GT)
@@ -295,10 +293,6 @@ def main():
                         tb_logger.add_image(f"val/{current_step}_{idx}", merge_tensor, global_step=current_step)
                         
                     idx += 1
-                    
-                    if idx == 1:
-                        merge_tensor = torchvision.transforms.functional.to_tensor(model.latent)
-                        tb_logger.add_image(f"val/latent_{current_step}", merge_tensor, global_step=current_step)
 
                 avg_psnr = avg_psnr / idx
 

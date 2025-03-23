@@ -53,7 +53,7 @@ def set_random_seed(seed):
 
 
 def setup_logger(
-    logger_name, root, phase, ts, level=logging.INFO, screen=False, tofile=False
+    logger_name, root, phase, level=logging.INFO, screen=False, tofile=False, is_resume=False
 ):
     """set up logger"""
     lg = logging.getLogger(logger_name)
@@ -63,8 +63,11 @@ def setup_logger(
     )
     lg.setLevel(level)
     if tofile:
-        log_file = os.path.join(root, phase + "_{}.log".format(ts))
-        fh = logging.FileHandler(log_file, mode="w")
+        log_file = os.path.join(root, phase + ".log")
+        if is_resume:
+            fh = logging.FileHandler(log_file, mode="a")
+        else:
+            fh = logging.FileHandler(log_file, mode="w")
         fh.setFormatter(formatter)
         lg.addHandler(fh)
     if screen:

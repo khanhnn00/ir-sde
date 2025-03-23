@@ -9,8 +9,8 @@ import torchvision.utils as tvutils
 import numpy as np
 import torch
 
-import src.latent_sr.options as option
-from src.latent_sr.models import create_model
+import src.edsr.options as option
+from src.edsr.models import create_model
 
 import src.utils as util
 from src.data import create_dataloader, create_dataset

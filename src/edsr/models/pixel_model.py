@@ -122,7 +122,6 @@ class PixelModel(BaseModel):
         self.optimizer.zero_grad()
         
         self.pred = self.model(self.LQ)
-        
         loss = self.weight * self.loss_fn(self.pred, self.GT)
 
         loss.backward()

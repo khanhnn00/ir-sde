@@ -1,9 +1,9 @@
 #### general settings
-name: edsr
+name: edsr_ntire
 use_tb_logger: true
 model: pixel_model
 distortion: sr
-gpu_ids: [0, 1]
+gpu_ids: [3]
 
 degradation: 
   # for super-resolution
@@ -15,8 +15,8 @@ datasets:
     optimizer: Adam # Adam, AdamW, Lion
     name: Train_Dataset
     mode: LQGT
-    dataroot_GT: ../dataset/DIV2K/DIV2K_train_HR
-    dataroot_LQ: ../dataset/DIV2K/DIV2K_train_LR_bicubic/X4
+    dataroot_GT: ../dataset/LSDIR/LSDIR_train_HR
+    dataroot_LQ: ../dataset/LSDIR/LSDIR_train_LR_X4
 
     use_shuffle: true
     n_workers: 16  # per GPU
@@ -34,8 +34,8 @@ datasets:
     GT_size: 512
     LR_size: 128
     color: RGB
-    dataroot_GT: ../dataset/DIV2K/DIV2K_valid_HR
-    dataroot_LQ: ../dataset/DIV2K/DIV2K_valid_LR_bicubic/X4
+    dataroot_GT: ../dataset/LSDIR/val1/HR/val
+    dataroot_LQ: ../dataset/LSDIR/val1/X4/val
 
 
 #### network structures
@@ -51,9 +51,9 @@ network_G:
 
 #### path
 path:
-  pretrain_model_G: exp/edsr/edsr/models/15000_G.pth
+  pretrain_model_G: exp/edsr/edsr_ntire/models/19000_G.pth
   strict_load: true
-  resume_state: exp/edsr/edsr/training_state/15000.state
+  resume_state: exp/edsr/edsr_ntire/training_state/19000.state
   root_exp: "./"
 
 #### training settings: learning rate scheme, loss
@@ -63,9 +63,9 @@ train:
   lr_scheme: MultiStepLR
   beta1: 0.9
   beta2: 0.99
-  niter: 30000
+  niter: 134000 # 100 epochs
   warmup_iter: -1  # no warm up
-  lr_steps: [16000, 28000]
+  lr_steps: [20000, 40000, 60000]
   lr_gamma: 0.5
   eta_min: !!float 1e-8
   wd_G: 0

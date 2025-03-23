@@ -82,6 +82,10 @@ for test_loader in test_loaders:
     test_results["ssim_y"] = []
     # test_results["lpips"] = []
     test_times = []
+    
+    gt_feats = []
+    pred_feats = []
+
 
     for i, test_data in enumerate(test_loader):
         single_img_psnr = []
@@ -142,6 +146,15 @@ for test_loader in test_loaders:
             ssim = util.calculate_ssim(cropped_sr_img * 255, cropped_gt_img * 255)
             # lp_score = lpips_fn(
             #     GT.to(device) * 2 - 1, SR_img.to(device) * 2 - 1).squeeze().item()
+            
+            # calculating FID score
+            
+            fid_pred = visuals["Output"].detach().float().cpu().clamp_(0, 1)  # clamp
+            print('fid_pred.shape: ', fid_pred.shape)
+            pred_feats.append(fid_pred.unsqueeze(0))
+                    
+            fid_gt = visuals["GT"].detach().float().cpu().clamp_(0, 1)  # clamp
+            gt_feats.append(fid_gt.unsqueeze(0))
 
             test_results["psnr"].append(psnr)
             test_results["ssim"].append(ssim)
@@ -192,11 +205,23 @@ for test_loader in test_loaders:
     # ave_lpips = sum(test_results["lpips"]) / len(test_results["lpips"])
     ave_psnr = sum(test_results["psnr"]) / len(test_results["psnr"])
     ave_ssim = sum(test_results["ssim"]) / len(test_results["ssim"])
+    
+    # calculate fid
+    assert len(pred_feats) == len(gt_feats)
+    
     logger.info(
-        "----Average PSNR/SSIM results for {}----\n\tPSNR: {:.6f} dB; SSIM: {:.6f}\n".format(
+        "----Average PSNR/SSIM results for {}----\n\tPSNR: {:.6f} dB; SSIM: {:.6f}".format(
             test_set_name, ave_psnr, ave_ssim
         )
     )
+    
+    if need_GT and len(pred_feats) > 0:
+        all_fid_gt = torch.cat(gt_feats, dim=0)       # shape [N, C, H, W]
+        all_fid_pred = torch.cat(pred_feats, dim=0)   # shape [N, C, H, W]
+        fid_score = util.calculate_fid(all_fid_gt, all_fid_pred)
+        logger.info(f"FID score: {fid_score}")
+    
+    
     if test_results["psnr_y"] and test_results["ssim_y"]:
         ave_psnr_y = sum(test_results["psnr_y"]) / len(test_results["psnr_y"])
         ave_ssim_y = sum(test_results["ssim_y"]) / len(test_results["ssim_y"])

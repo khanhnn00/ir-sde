@@ -3,32 +3,32 @@ NC='\033[0m' # No Color
 
 cd ../dataset
 
-echo "${RED}Downloading datasets... 1 / 8: Flickr2K${NC}"
-wget https://cv.snu.ac.kr/research/EDSR/Flickr2K.tar
+# # echo "${RED}Downloading datasets... 1 / 8: Flickr2K${NC}"
+# # wget https://cv.snu.ac.kr/research/EDSR/Flickr2K.tar
 
-# echo "${RED}Downloading datasets... 2 / 8: DIV2K Train HR${NC}"
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_HR.zip
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_HR.zip
+# # echo "${RED}Downloading datasets... 2 / 8: DIV2K Train HR${NC}"
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_HR.zip
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_HR.zip
 
-# echo "${RED}Downloading datasets... 3 / 8: DIV2K bicubic LR x2${NC}"
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X2.zip
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X2.zip
+# # echo "${RED}Downloading datasets... 3 / 8: DIV2K bicubic LR x2${NC}"
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X2.zip
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X2.zip
 
-# echo "${RED}Downloading datasets... 4 / 8: DIV2K bicubic LR x3${NC}"
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X3.zip
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X3.zip
+# # echo "${RED}Downloading datasets... 4 / 8: DIV2K bicubic LR x3${NC}"
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X3.zip
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X3.zip
 
 # echo "${RED}Downloading datasets... 5 / 8: DIV2K bicubic LR x4${NC}"
 # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X4.zip
 # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X4.zip
 
-# echo "${RED}Downloading datasets... 6 / 8: DIV2K unknown LR x2${NC}"
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X2.zip
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X2.zip
+# # echo "${RED}Downloading datasets... 6 / 8: DIV2K unknown LR x2${NC}"
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X2.zip
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X2.zip
 
-# echo "${RED}Downloading datasets... 7 / 8: DIV2K unknown LR x3${NC}"
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X3.zip
-# wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X3.zip
+# # echo "${RED}Downloading datasets... 7 / 8: DIV2K unknown LR x3${NC}"
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X3.zip
+# # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X3.zip
 
 # echo "${RED}Downloading datasets... 8 / 8: DIV2K unknown LR x4${NC}"
 # wget http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X4.zip
@@ -36,27 +36,27 @@ wget https://cv.snu.ac.kr/research/EDSR/Flickr2K.tar
 
 # mkdir -p ./DIV2K
 
-# echo "${RED}Unzipping datasets...${NC}"
-# echo "${RED}Flickr2K 1 / 8${NC}"
-# tar -xvf Flickr2K.tar
+echo "${RED}Unzipping datasets...${NC}"
+echo "${RED}Flickr2K 1 / 8${NC}"
+tar -xvf Flickr2K.tar
 # echo "${RED}DIV2K HR 2 / 8${NC}"
 # unzip DIV2K_train_HR.zip -d ./DIV2K/
 # unzip DIV2K_valid_HR.zip -d ./DIV2K/
-# echo "${RED}DIV2K bicubic LR x2 3 / 8${NC}"
-# unzip DIV2K_train_LR_bicubic_X2.zip -d ./DIV2K/
-# unzip DIV2K_valid_LR_bicubic_X2.zip -d ./DIV2K/
-# echo "${RED}DIV2K bicubic LR x3 4 / 8${NC}"
-# unzip DIV2K_train_LR_bicubic_X3.zip -d ./DIV2K/
-# unzip DIV2K_valid_LR_bicubic_X3.zip -d ./DIV2K/
+# # echo "${RED}DIV2K bicubic LR x2 3 / 8${NC}"
+# # unzip DIV2K_train_LR_bicubic_X2.zip -d ./DIV2K/
+# # unzip DIV2K_valid_LR_bicubic_X2.zip -d ./DIV2K/
+# # echo "${RED}DIV2K bicubic LR x3 4 / 8${NC}"
+# # unzip DIV2K_train_LR_bicubic_X3.zip -d ./DIV2K/
+# # unzip DIV2K_valid_LR_bicubic_X3.zip -d ./DIV2K/
 # echo "${RED}DIV2K bicubic LR x4 5 / 8${NC}"
 # unzip DIV2K_train_LR_bicubic_X4.zip -d ./DIV2K/
 # unzip DIV2K_valid_LR_bicubic_X4.zip -d ./DIV2K/
-# echo "${RED}DIV2K unknown LR x2 6 / 8${NC}"
-# unzip DIV2K_train_LR_unknown_X2.zip -d ./DIV2K/
-# unzip DIV2K_valid_LR_unknown_X2.zip -d ./DIV2K/
-# echo "${RED}DIV2K unknown LR x3 7 / 8${NC}"
-# unzip DIV2K_train_LR_unknown_X3.zip -d ./DIV2K/
-# unzip DIV2K_valid_LR_unknown_X3.zip -d ./DIV2K/
+# # echo "${RED}DIV2K unknown LR x2 6 / 8${NC}"
+# # unzip DIV2K_train_LR_unknown_X2.zip -d ./DIV2K/
+# # unzip DIV2K_valid_LR_unknown_X2.zip -d ./DIV2K/
+# # echo "${RED}DIV2K unknown LR x3 7 / 8${NC}"
+# # unzip DIV2K_train_LR_unknown_X3.zip -d ./DIV2K/
+# # unzip DIV2K_valid_LR_unknown_X3.zip -d ./DIV2K/
 # echo "${RED}DIV2K unknown LR x4 8 / 8${NC}"
 # unzip DIV2K_train_LR_unknown_X4.zip -d ./DIV2K/
 # unzip DIV2K_valid_LR_unknown_X4.zip -d ./DIV2K/
